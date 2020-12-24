@@ -56,15 +56,15 @@ $(function(){
 	log("Building settings.");
 	var params = parseQueryParams(window.location.search);
 	var channel = params.ch.toLowerCase();
-	$.getJSON("https://api.frankerfacez.com/v1/room/"+channel, loadFFZChannel);
-	if(channel !== "cbenni") $.getJSON("https://api.frankerfacez.com/v1/room/cbenni", loadFFZ);
-	$.getJSON("https://api.frankerfacez.com/v1/set/global", loadFFZ);
-	$.getJSON("https://api.betterttv.net/2/channels/"+channel, loadBTTVChannel);
-	$.getJSON("https://api.betterttv.net/2/emotes", loadBTTV);
+	$.getJSON("//api.frankerfacez.com/v1/room/"+channel, loadFFZChannel);
+	if(channel !== "cbenni") $.getJSON("//api.frankerfacez.com/v1/room/cbenni", loadFFZ);
+	$.getJSON("//api.frankerfacez.com/v1/set/global", loadFFZ);
+	$.getJSON("//api.betterttv.net/2/channels/"+channel, loadBTTVChannel);
+	$.getJSON("//api.betterttv.net/2/emotes", loadBTTV);
 	
 	var subemotes = {"sub":[], "ffz":[], "bttv":[], "gif": []};
 	$.ajax({
-		url: "http://api.twitch.tv/api/channels/"+channel+"/product",
+		url: "//api.twitch.tv/api/channels/"+channel+"/product",
 		jsonp: "callback",
 		dataType: "jsonp",
 		success: function( response ) {
@@ -72,7 +72,7 @@ $(function(){
 			for(var i=0;i<emotes.length;++i) {
 				var emote = emotes[i];
 				if(emote.state === "active") {
-					subemotes.sub.push({type:"sub",url:"http://static-cdn.jtvnw.net/emoticons/v1/"+emote.id+"/3.0"});
+					subemotes.sub.push({type:"sub",url:"//static-cdn.jtvnw.net/emoticons/v1/"+emote.id+"/3.0"});
 				}
 			}
 		}
@@ -162,7 +162,7 @@ $(function(){
 	}
 
 	$.ajax({
-		url: "http://api.twitch.tv/api/channels/"+channel+"/chat_properties",
+		url: "//api.twitch.tv/api/channels/"+channel+"/chat_properties",
 		jsonp: "callback",
 		dataType: "jsonp",
 		success: function( response ) {
@@ -401,7 +401,7 @@ $(function(){
 				var allowedEmotes = [];
 				for(var i=0;i<data.emotes.length;i++) {
 					var emote = data.emotes[i];
-					var imgPath = "http://static-cdn.jtvnw.net/emoticons/v1/"+emote.id+"/3.0";
+					var imgPath = "//static-cdn.jtvnw.net/emoticons/v1/"+emote.id+"/3.0";
 					allowedEmotes.push({"url":imgPath});
 				}
 				var usplit = data.text.split(" ");
@@ -446,14 +446,14 @@ $(function(){
 			else if(settings.once) {
 				for(var i=0;i<extmsg.emoteids.length;i++) {
 					var emoteid = extmsg.emoteids[i];
-					var imgPath = "http://static-cdn.jtvnw.net/emoticons/v1/"+emoteid+"/3.0";
+					var imgPath = "//static-cdn.jtvnw.net/emoticons/v1/"+emoteid+"/3.0";
 					drawEmote(extmsg.nick, imgPath);
 				}
 			} else {
 				for(var i=0;i<extmsg.emotes.length;i++) {
 					var emote = extmsg.emotes[i];
 					log("drawing emote with id "+emote.id);
-					var imgPath = "http://static-cdn.jtvnw.net/emoticons/v1/"+emote.id+"/3.0";
+					var imgPath = "//static-cdn.jtvnw.net/emoticons/v1/"+emote.id+"/3.0";
 					drawEmote(extmsg.nick, imgPath);
 				}
 			}
@@ -476,7 +476,7 @@ $(function(){
 		$.each(data.sets, function(){
 			$.each(this.emoticons, function(){
 				var x = this.urls;
-				ExtraEmotes[this.name] = {"url":"https://"+ (x[4] || x[2] || x[1]), "type": "ffz"};
+				ExtraEmotes[this.name] = {"url":"//"+ (x[4] || x[2] || x[1]), "type": "ffz"};
 			});
 		});
 	}
@@ -484,7 +484,7 @@ $(function(){
 		$.each(data.sets, function(){
 			$.each(this.emoticons, function(){
 				var x = this.urls;
-				var emote = {"url":"https://"+ (x[4] || x[2] || x[1]), "type": "ffz"};
+				var emote = {"url":"//"+ (x[4] || x[2] || x[1]), "type": "ffz"};
 				ExtraEmotes[this.name] = emote;
 				subemotes["ffz"].push(emote);
 			});
@@ -600,7 +600,7 @@ $(function(){
 	{
 		if(getEmotesplosionTriggers("f")) {
 			$.ajax({
-				url: "https://api.twitch.tv/kraken/channels/"+channel+"/follows",
+				url: "//api.twitch.tv/kraken/channels/"+channel+"/follows",
 				type: 'GET',
 				crossDomain: true,
 				dataType: 'jsonp',
